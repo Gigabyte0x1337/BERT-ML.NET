@@ -18,14 +18,14 @@ namespace ML.BERT.TestApp.Bert
             var tokens = _tokenizer.Tokenize(texts)
                 .ToList();
 
-            var padding = Enumerable.Repeat((long)0, sequenceLength - tokens.Count);
+            var padding = Enumerable.Repeat(0L, sequenceLength - tokens.Count);
 
             var uniqueTokenIndexes = Enumerable.Range(1000000000, sequenceLength)
                 .Select(o => (long)o)
                 .ToArray();
 
             var tokenIndexes = tokens
-                .Select(o => (long)o.Item2)
+                .Select((token, index) => (long)index)
                 .Concat(padding)
                 .ToArray();
 
@@ -34,7 +34,7 @@ namespace ML.BERT.TestApp.Bert
                 .ToArray();
 
             var inputMask =
-                tokens.Select(o => (long)1)
+                tokens.Select(o => 1L)
                 .Concat(padding)
                 .ToArray();
 
