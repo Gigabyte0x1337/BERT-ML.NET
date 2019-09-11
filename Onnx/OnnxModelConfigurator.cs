@@ -5,22 +5,22 @@ namespace ML.BERT.TestApp.Onnx
 {
     public class OnnxModelConfigurator<TFeature> where TFeature : class
     {
-        private readonly MLContext mlContext;
-        private readonly ITransformer mlModel;
+        private readonly MLContext _mlContext;
+        private readonly ITransformer _mlModel;
 
         public OnnxModelConfigurator(IOnnxModel onnxModel)
         {
-            mlContext = new MLContext();
+            _mlContext = new MLContext();
 
-            mlModel = SetupMlNetModel(onnxModel);
+            _mlModel = SetupMlNetModel(onnxModel);
         }
 
         private ITransformer SetupMlNetModel(IOnnxModel onnxModel)
         {
-            var dataView = mlContext.Data
+            var dataView = _mlContext.Data
                 .LoadFromEnumerable(new List<TFeature>());
 
-            var pipeline = mlContext.Transforms
+            var pipeline = _mlContext.Transforms
                             .ApplyOnnxModel(modelFile: onnxModel.ModelPath, outputColumnNames: onnxModel.ModelOutput, inputColumnNames: onnxModel.ModelInput);
 
             var mlNetModel = pipeline.Fit(dataView);
@@ -31,13 +31,13 @@ namespace ML.BERT.TestApp.Onnx
         public PredictionEngine<TFeature, T> GetMlNetPredictionEngine<T>()
             where T : class, new()
         {
-            return mlContext.Model.CreatePredictionEngine<TFeature, T>(mlModel);
+            return _mlContext.Model.CreatePredictionEngine<TFeature, T>(_mlModel);
         }
 
         public void SaveMLNetModel(string mlnetModelFilePath)
         {
             // Save/persist the model to a .ZIP file to be loaded by the PredictionEnginePool
-            mlContext.Model.Save(mlModel, null, mlnetModelFilePath);
+            _mlContext.Model.Save(_mlModel, null, mlnetModelFilePath);
         }
     }
 }
