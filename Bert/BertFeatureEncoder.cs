@@ -47,16 +47,16 @@ namespace ML.BERT.TestApp.Bert
             };
         }
 
-        private IEnumerable<long> GetSegmentIndexes(List<(string, int)> tokens)
+        private IEnumerable<long> GetSegmentIndexes(List<(string token, int index)> tokens)
         {
-            var segmentIndexes = new List<long>();
             var segmentIndex = 0;
-            
-            for (int i = 0; i < tokens.Count(); i++)
+            var segmentIndexes = new List<long>();
+
+            foreach (var (token, index) in tokens)
             {
                 segmentIndexes.Add(segmentIndex);
 
-                if (tokens[i].Item1 == WordPieceTokenizer.DefaultTokens.Separation)
+                if (token == WordPieceTokenizer.DefaultTokens.Separation)
                 {
                     segmentIndex++;
                 }
