@@ -51,6 +51,7 @@ namespace ML.BERT.TestApp.Bert
         {
             var segmentIndexes = new List<long>();
             var segmentIndex = 0;
+            
             for (int i = 0; i < tokens.Count(); i++)
             {
                 segmentIndexes.Add(segmentIndex);
