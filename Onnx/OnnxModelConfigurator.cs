@@ -11,7 +11,6 @@ namespace ML.BERT.TestApp.Onnx
         public OnnxModelConfigurator(IOnnxModel onnxModel)
         {
             _mlContext = new MLContext();
-
             _mlModel = SetupMlNetModel(onnxModel);
         }
 

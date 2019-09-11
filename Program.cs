@@ -1,6 +1,4 @@
-﻿using Microsoft.ML;
-using Microsoft.ML.Data;
-using ML.BERT.TestApp.Bert;
+﻿using ML.BERT.TestApp.Bert;
 using ML.BERT.TestApp.Bert.Tokenizers;
 using ML.BERT.TestApp.Onnx;
 using System;
