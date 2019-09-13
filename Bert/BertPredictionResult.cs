@@ -13,8 +13,8 @@ namespace ML.BERT.TestApp
         [ColumnName("unstack:0")]
         public float[] Output1 { get; set; }
 
-      /*  [VectorType(256)]
+        [VectorType(1)]
         [ColumnName("unique_ids:0")]
-        public long[] UniqueIds { get; set; }*/
+        public long[] UniqueIds { get; set; }
     }
 }
