@@ -20,12 +20,12 @@ namespace ML.BERT.TestApp.Bert
 
             var padding = Enumerable.Repeat(0L, sequenceLength - tokens.Count);
 
-            var uniqueTokenIndexes = Enumerable.Range(1000000000, sequenceLength)
+            var uniqueTokenIndexes = Enumerable.Range(1000000000, 1)
                 .Select(o => (long)o)
                 .ToArray();
 
             var tokenIndexes = tokens
-                .Select((token, index) => (long)index)
+                .Select((token, index) => (long)token.Item2)
                 .Concat(padding)
                 .ToArray();
 

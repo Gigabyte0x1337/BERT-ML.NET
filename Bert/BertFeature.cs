@@ -4,9 +4,9 @@ namespace ML.BERT.TestApp.Bert
 {
     public class BertFeature
     {
-        [VectorType(1, 256)]
-        [ColumnName("input_ids:0")]
-        public long[] InputIds { get; set; }
+        [VectorType(1)]
+        [ColumnName("unique_ids_raw_output___9:0")]
+        public long[] UniqueIds { get; set; }
 
         [VectorType(1, 256)]
         [ColumnName("segment_ids:0")]
@@ -16,8 +16,8 @@ namespace ML.BERT.TestApp.Bert
         [ColumnName("input_mask:0")]
         public long[] InputMask { get; set; }
 
-        [VectorType(256)]
-        [ColumnName("unique_ids_raw_output___9:0")]
-        public long[] UniqueIds { get; set; }
+        [VectorType(1, 256)]
+        [ColumnName("input_ids:0")]
+        public long[] InputIds { get; set; }
     }
 }
