@@ -85,7 +85,7 @@ namespace ML.BERT.TestApp.Bert.Tokenizers
         {
             // remove spaces and split the , . : ; etc..
             return text.Split(new string[] { " ", "   ", "\r\n" }, StringSplitOptions.None)
-                .SelectMany(o => Regex.Split(o.ToLower(), @"(?=[.,;:\\/?!#$%()=+\-*`<>&^@{}\[\]|~'])"));
+                .SelectMany(o => Regex.Split(o.ToLower(), @"(?=[.,;:\\\/?!#$%()=+\-*""'–_`<>&^@{}\[\]|~'])"));
         }
     }
 }

@@ -27,8 +27,7 @@ namespace ML.BERT.TestApp.Onnx
             return mlNetModel;
         }
 
-        public PredictionEngine<TFeature, T> GetMlNetPredictionEngine<T>()
-            where T : class, new()
+        public PredictionEngine<TFeature, T> GetMlNetPredictionEngine<T>() where T : class, new()
         {
             return _mlContext.Model.CreatePredictionEngine<TFeature, T>(_mlModel);
         }
