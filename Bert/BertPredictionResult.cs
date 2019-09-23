@@ -6,11 +6,11 @@ namespace ML.BERT.TestApp
     {
         [VectorType(1, 256)]
         [ColumnName("unstack:1")]
-        public float[] StartLogits { get; set; }
+        public float[] EndLogits { get; set; }
 
         [VectorType(1, 256)]
         [ColumnName("unstack:0")]
-        public float[] EndLogits { get; set; }
+        public float[] StartLogits { get; set; }
 
         [VectorType(1)]
         [ColumnName("unique_ids:0")]

@@ -23,7 +23,7 @@ namespace ML.BERT.TestApp.Bert.Tokenizers
             _vocabulary = vocabulary;
         }
 
-        public IEnumerable<(string, int)> Tokenize(params string[] texts)
+        public IEnumerable<(string Token, int VocabularyIndex)> Tokenize(params string[] texts)
         {
             // [CLS] Words of sentence [SEP] Words of next sentence [SEP]
             IEnumerable<string> tokens = new string[] { DefaultTokens.Classification };
@@ -45,7 +45,7 @@ namespace ML.BERT.TestApp.Bert.Tokenizers
          * https://developpaper.com/bert-visual-learning-of-the-strongest-nlp-model/
          * https://medium.com/@_init_/why-bert-has-3-embedding-layers-and-their-implementation-details-9c261108e28a
          */
-        private IEnumerable<(string, int)> TokenizeSubwords(string word)
+        private IEnumerable<(string Token, int VocabularyIndex)> TokenizeSubwords(string word)
         {
             if (_vocabulary.Contains(word))
             {
@@ -73,7 +73,7 @@ namespace ML.BERT.TestApp.Bert.Tokenizers
                 tokens.Add((prefix, _vocabulary.IndexOf(prefix)));
             }
 
-            if (!tokens.Any())
+            if (!string.IsNullOrWhiteSpace(word) && !tokens.Any())
             {
                 tokens.Add((DefaultTokens.Unknown, _vocabulary.IndexOf(DefaultTokens.Unknown)));
             }
@@ -85,7 +85,8 @@ namespace ML.BERT.TestApp.Bert.Tokenizers
         {
             // remove spaces and split the , . : ; etc..
             return text.Split(new string[] { " ", "   ", "\r\n" }, StringSplitOptions.None)
-                .SelectMany(o => Regex.Split(o.ToLower(), @"(?=[.,;:\\\/?!#$%()=+\-*""'–_`<>&^@{}\[\]|~'])"));
+                .SelectMany(o => o.SplitAndKeep(".,;:\\/?!#$%()=+-*\"'–_`<>&^@{}[]|~'".ToArray()))
+                .Select(o => o.ToLower());
         }
     }
 }

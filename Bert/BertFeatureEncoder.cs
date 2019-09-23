@@ -21,7 +21,7 @@ namespace ML.BERT.TestApp.Bert
             var padding = Enumerable.Repeat(0L, sequenceLength - tokens.Count);
 
             var tokenIndexes = tokens
-                .Select((token, index) => (long)token.Item2)
+                .Select(token => (long)token.VocabularyIndex)
                 .Concat(padding)
                 .ToArray();
 

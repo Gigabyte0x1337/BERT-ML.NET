@@ -1,4 +1,5 @@
 ﻿using Microsoft.ML.Data;
+using System.Collections.Generic;
 
 namespace ML.BERT.TestApp.Bert
 {
