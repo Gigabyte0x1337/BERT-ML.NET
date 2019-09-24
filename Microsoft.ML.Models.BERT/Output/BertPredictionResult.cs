@@ -1,8 +1,8 @@
 ﻿using Microsoft.ML.Data;
 
-namespace ML.BERT.TestApp
+namespace Microsoft.ML.Models.BERT.Output
 {
-    public class BertPredictionResult
+    internal class BertPredictionResult
     {
         [VectorType(1, 256)]
         [ColumnName("unstack:1")]

@@ -1,6 +1,6 @@
-﻿using ML.BERT.TestApp.Onnx;
+﻿using Microsoft.ML.Models.BERT.Onnx;
 
-namespace ML.BERT.TestApp
+namespace Microsoft.ML.Models.BERT
 {
     public class BertModelConfiguration : IOnnxModel
     {

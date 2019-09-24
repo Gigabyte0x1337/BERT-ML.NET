@@ -1,13 +1,16 @@
 ﻿using Microsoft.ML;
-using ML.BERT.TestApp.Bert;
-using ML.BERT.TestApp.Bert.Tokenizers;
-using ML.BERT.TestApp.Onnx;
+using Microsoft.ML.Models.BERT;
+using Microsoft.ML.Models.BERT.Extensions;
+using Microsoft.ML.Models.BERT.Input;
+using Microsoft.ML.Models.BERT.Onnx;
+using Microsoft.ML.Models.BERT.Output;
+using Microsoft.ML.Models.BERT.Tokenizers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ML.BERT.TestApp
+namespace Microsoft.ML.Models.BERT
 {
     public class BertModel : IDisposable
     {
@@ -30,23 +33,55 @@ namespace ML.BERT.TestApp
             _predictionEngine = onnxModelConfigurator.GetMlNetPredictionEngine<BertPredictionResult>();
         }
 
-        public List<string> Predict(string context, string question)
+        public (List<string> tokens, float probability) Predict(string context, string question)
         {
             var tokens = _wordPieceTokenizer.Tokenize(question, context);
             var encodedFeature = Encode(tokens);
 
             var result = _predictionEngine.Predict(encodedFeature);
+            var contextStart = tokens.FindIndex(o => o.Token == WordPieceTokenizer.DefaultTokens.Separation);
 
-            var (startIndex, endIndex, probability) = GetBestPredictionFromResult(result);
+            var (startIndex, endIndex, probability) = GetBestPredictionFromResult(result, contextStart);
 
-            return encodedFeature.InputIds
+            var predictedTokens = encodedFeature.InputIds
                 .Skip(startIndex)
                 .Take(endIndex + 1 - startIndex)
                 .Select(o => _vocabulary[(int)o])
                 .ToList();
+
+            var stichedTokens = StitchSentenceBackTogether(predictedTokens);
+
+            return (stichedTokens, probability);
         }
 
-        private (int StartIndex, int EndIndex, float Probability) GetBestPredictionFromResult(BertPredictionResult result)
+        private List<string> StitchSentenceBackTogether(List<string> tokens)
+        {
+            var prevousToken = string.Empty;
+            var currentToken = string.Empty;
+
+            tokens.Reverse();
+
+            var tokensStitched = new List<string>();
+
+            foreach (var token in tokens)
+            {
+                if (!token.StartsWith("##"))
+                {
+                    currentToken = token + currentToken;
+                    tokensStitched.Add(currentToken);
+                    currentToken = string.Empty;
+                } else
+                {
+                    currentToken = token.Replace("##", "") + currentToken;
+                }
+            }
+
+            tokensStitched.Reverse();
+
+            return tokensStitched;
+        }
+
+        private (int StartIndex, int EndIndex, float Probability) GetBestPredictionFromResult(BertPredictionResult result, int minIndex)
         {
             var bestN = _bertModelConfiguration.BestResultSize;
 
@@ -71,7 +106,7 @@ namespace ML.BERT.TestApp
                         )
                      )
                 )
-                .Where(entry => !(entry.EndLogit < entry.StartLogit || entry.EndLogit - entry.StartLogit > _bertModelConfiguration.MaxAwnserLength))
+                .Where(entry => !(entry.EndLogit < entry.StartLogit || entry.EndLogit - entry.StartLogit > _bertModelConfiguration.MaxAwnserLength || entry.StartLogit == 0 && entry.EndLogit == 0 || entry.StartLogit < minIndex))
                 .Take(bestN);
 
             var (item, probability) = bestResultsWithScore

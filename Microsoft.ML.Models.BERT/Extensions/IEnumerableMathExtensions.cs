@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ML.BERT.TestApp
+namespace Microsoft.ML.Models.BERT.Extensions
 {
     public static class IEnumerableMathExtensions
     {

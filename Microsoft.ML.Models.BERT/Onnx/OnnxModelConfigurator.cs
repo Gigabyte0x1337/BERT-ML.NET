@@ -1,7 +1,8 @@
 ﻿using Microsoft.ML;
+using Microsoft.ML.Models.BERT.Onnx;
 using System.Collections.Generic;
 
-namespace ML.BERT.TestApp.Onnx
+namespace Microsoft.ML.Models.BERT.Onnx
 {
     public class OnnxModelConfigurator<TFeature> where TFeature : class
     {

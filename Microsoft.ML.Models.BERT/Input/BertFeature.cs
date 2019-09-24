@@ -1,9 +1,9 @@
 ﻿using Microsoft.ML.Data;
 using System.Collections.Generic;
 
-namespace ML.BERT.TestApp.Bert
+namespace Microsoft.ML.Models.BERT.Input
 {
-    public class BertFeature
+    internal class BertFeature
     {
         [VectorType(1)]
         [ColumnName("unique_ids_raw_output___9:0")]

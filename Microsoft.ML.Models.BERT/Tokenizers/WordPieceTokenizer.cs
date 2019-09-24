@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.ML.Models.BERT.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ML.BERT.TestApp.Bert.Tokenizers
+namespace Microsoft.ML.Models.BERT.Tokenizers
 {
     public class WordPieceTokenizer
     {

@@ -1,4 +1,4 @@
-﻿namespace ML.BERT.TestApp.Onnx
+﻿namespace Microsoft.ML.Models.BERT.Onnx
 {
     public interface IOnnxModel
     {
