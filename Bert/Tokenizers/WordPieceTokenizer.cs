@@ -23,7 +23,7 @@ namespace ML.BERT.TestApp.Bert.Tokenizers
             _vocabulary = vocabulary;
         }
 
-        public IEnumerable<(string Token, int VocabularyIndex)> Tokenize(params string[] texts)
+        public List<(string Token, int VocabularyIndex)> Tokenize(params string[] texts)
         {
             // [CLS] Words of sentence [SEP] Words of next sentence [SEP]
             IEnumerable<string> tokens = new string[] { DefaultTokens.Classification };
@@ -34,7 +34,9 @@ namespace ML.BERT.TestApp.Bert.Tokenizers
                 tokens = tokens.Concat(new string[] { DefaultTokens.Separation });
             }
 
-            return tokens.SelectMany(TokenizeSubwords);
+            return tokens
+                .SelectMany(TokenizeSubwords)
+                .ToList();
         }
 
         /**
