@@ -1,14 +1,12 @@
-﻿using Microsoft.ML;
-using Microsoft.ML.Models.BERT;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 using Microsoft.ML.Models.BERT.Extensions;
 using Microsoft.ML.Models.BERT.Input;
 using Microsoft.ML.Models.BERT.Onnx;
 using Microsoft.ML.Models.BERT.Output;
 using Microsoft.ML.Models.BERT.Tokenizers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace Microsoft.ML.Models.BERT
 {
@@ -56,7 +54,6 @@ namespace Microsoft.ML.Models.BERT
 
         private List<string> StitchSentenceBackTogether(List<string> tokens)
         {
-            var prevousToken = string.Empty;
             var currentToken = string.Empty;
 
             tokens.Reverse();
@@ -106,7 +103,7 @@ namespace Microsoft.ML.Models.BERT
                         )
                      )
                 )
-                .Where(entry => !(entry.EndLogit < entry.StartLogit || entry.EndLogit - entry.StartLogit > _bertModelConfiguration.MaxAwnserLength || entry.StartLogit == 0 && entry.EndLogit == 0 || entry.StartLogit < minIndex))
+                .Where(entry => !(entry.EndLogit < entry.StartLogit || entry.EndLogit - entry.StartLogit > _bertModelConfiguration.MaxAnswerLength || entry.StartLogit == 0 && entry.EndLogit == 0 || entry.StartLogit < minIndex))
                 .Take(bestN);
 
             var (item, probability) = bestResultsWithScore
@@ -119,7 +116,9 @@ namespace Microsoft.ML.Models.BERT
 
         private BertFeature Encode(List<(string Token, int Index)> tokens)
         {
-            var padding = Enumerable.Repeat(0L, _bertModelConfiguration.MaxSequenceLength - tokens.Count);
+            var padding = Enumerable
+                .Repeat(0L, _bertModelConfiguration.MaxSequenceLength - tokens.Count)
+                .ToList();
 
             var tokenIndexes = tokens
                 .Select(token => (long)token.Index)
@@ -168,7 +167,7 @@ namespace Microsoft.ML.Models.BERT
 
             using (var reader = new StreamReader(filename))
             {
-                var line = string.Empty;
+                string line;
 
                 while ((line = reader.ReadLine()) != null)
                 {

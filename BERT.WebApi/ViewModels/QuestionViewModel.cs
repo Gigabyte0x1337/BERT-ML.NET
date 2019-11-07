@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BERT.WebApi.ViewModels
+﻿namespace BERT.WebApi.ViewModels
 {
     public class QuestionViewModel
     {

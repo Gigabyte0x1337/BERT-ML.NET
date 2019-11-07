@@ -35,7 +35,6 @@ namespace Microsoft.ML.Models.BERT.Onnx
 
         public void SaveMLNetModel(string mlnetModelFilePath)
         {
-            // Save/persist the model to a .ZIP file to be loaded by the PredictionEnginePool
             _mlContext.Model.Save(_mlModel, null, mlnetModelFilePath);
         }
     }

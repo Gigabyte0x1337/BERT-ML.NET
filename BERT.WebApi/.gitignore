@@ -1,3 +1,5 @@
-Model/bert.onnx
+Model/bertsquad8.onnx
 obj/
 bin/
+Properties/PublishProfiles
+BERT.WebApi.csproj.user

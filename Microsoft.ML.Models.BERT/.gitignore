@@ -1,0 +1,4 @@
+Model/bertsquad8.onnx
+obj/
+bin/
+Properties/PublishProfiles
