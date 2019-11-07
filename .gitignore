@@ -4,5 +4,6 @@
 
 /Microsoft.ML.Models.BERT/obj
 /Microsoft.ML.Models.BERT/bin/Debug/netstandard2.0
-/.vs/ML.BERT.TestApp
+/.vs
 *.onnx
+
