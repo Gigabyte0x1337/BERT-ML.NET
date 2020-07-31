@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.ML.Models.BERT;
 
 namespace BERT.WebApi
@@ -17,15 +18,13 @@ namespace BERT.WebApi
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+        { 
             services.AddSingleton(o =>
             {
                 var modelConfig = new BertModelConfiguration()
                 {
                     VocabularyFile = "Model/vocab.txt",
-                    ModelPath = "Model/bertsquad8.onnx"
+                    ModelPath = "Model/bertsquad-10.onnx"
                 };
 
                 var model = new BertModel(modelConfig);
@@ -33,9 +32,11 @@ namespace BERT.WebApi
 
                 return model;
             });
+
+            services.AddControllers();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -47,7 +48,11 @@ namespace BERT.WebApi
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(e =>
+            {
+                e.MapControllers();
+            });
         }
     }
 }

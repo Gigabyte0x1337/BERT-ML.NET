@@ -21,7 +21,7 @@ namespace Microsoft.ML.Models.BERT.Onnx
                 .LoadFromEnumerable(new List<TFeature>());
 
             var pipeline = _mlContext.Transforms
-                            .ApplyOnnxModel(modelFile: onnxModel.ModelPath, outputColumnNames: onnxModel.ModelOutput, inputColumnNames: onnxModel.ModelInput);
+                            .ApplyOnnxModel(modelFile: onnxModel.ModelPath, outputColumnNames: onnxModel.ModelOutput, inputColumnNames: onnxModel.ModelInput, gpuDeviceId: 0);
 
             var mlNetModel = pipeline.Fit(dataView);
 
