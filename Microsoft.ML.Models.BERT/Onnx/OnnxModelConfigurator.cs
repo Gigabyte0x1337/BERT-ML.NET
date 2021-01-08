@@ -17,11 +17,13 @@ namespace Microsoft.ML.Models.BERT.Onnx
 
         private ITransformer SetupMlNetModel(IOnnxModel onnxModel)
         {
+            bool hasGpu = false;
+
             var dataView = _mlContext.Data
                 .LoadFromEnumerable(new List<TFeature>());
 
             var pipeline = _mlContext.Transforms
-                            .ApplyOnnxModel(modelFile: onnxModel.ModelPath, outputColumnNames: onnxModel.ModelOutput, inputColumnNames: onnxModel.ModelInput, gpuDeviceId: 0);
+                            .ApplyOnnxModel(modelFile: onnxModel.ModelPath, outputColumnNames: onnxModel.ModelOutput, inputColumnNames: onnxModel.ModelInput, gpuDeviceId: hasGpu ? 0 : (int?)null);
 
             var mlNetModel = pipeline.Fit(dataView);
 
