@@ -15,3 +15,16 @@ To run on an Nvidia CUDA GPU:
 * Set `hasGpu = true` in OnnxModelConfigurator.cs
 * Remove NuGet `Microsoft.ML.OnnxRuntime.NoOpenMP`
 * Add NuGet `Microsoft.ML.OnnxRuntime.Gpu`
+
+## Example queries
+When the solution runs, it will start an ASP.NET webservice at localhost:5001.
+
+|    | Context | Question | Model Reply |
+| -- | --  | -- | -- |
+| ([link](https://localhost:5001/api/predict?Context=Bob%20is%20walking%20through%20the%20woods%20collecting%20blueberries%20and%20strawberries%20to%20make%20a%20pie.&Question=What%20is%20his%20name?)) | Bob is walking through the woods collecting blueberries and strawberries to make a pie. | What is his name? | ✅ `{"tokens":["bob"],"probability":0.8884454}` |
+| ([link](https://localhost:5001/api/predict?Context=Bob%20is%20walking%20through%20the%20woods%20collecting%20blueberries%20and%20strawberries%20to%20make%20a%20pie.&Question=What%20will%20he%20bring%20home?)) | Bob is walking through the woods collecting blueberries and strawberries to make a pie. | What will he bring home? | ✅ `{"tokens":["blueberries","and","strawberries"],"probability":0.4070111}` |
+| ([link](https://localhost:5001/api/predict?Context=Bob%20is%20walking%20through%20the%20woods%20collecting%20blueberries%20and%20strawberries%20to%20make%20a%20pie.&Question=Where%20is%20bob?)) | Bob is walking through the woods collecting blueberries and strawberries to make a pie. | Where is Bob? | ✅ `{"tokens":["walking","through","the","woods"],"probability":0.6123137}` |
+| ([link](https://localhost:5001/api/predict?Context=Bob%20is%20walking%20through%20the%20woods%20collecting%20blueberries%20and%20strawberries%20to%20make%20a%20pie.&Question=What%20will%20he%20bake?)) | Bob is walking through the woods collecting blueberries and strawberries to make a pie. | What will he bake? | ❌ `{"tokens":["blueberries","and","strawberries"],"probability":0.48385787}` |
+
+
+
