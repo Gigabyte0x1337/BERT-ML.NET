@@ -1,0 +1,1 @@
+cd BERT.WebApi/Model && wget --output-document=bertsquad-10.onnx.tmp https://github.com/onnx/models/blob/master/text/machine_comprehension/bert-squad/model/bertsquad-10.onnx?raw=true && mv bertsquad-10.onnx.tmp bertsquad-10.onnx
