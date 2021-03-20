@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BERT.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "\"Bob is walking through the woods collecting blueberries and strawberries to make a pie.\" \"What is his name?\""
+    }
+  }
+}

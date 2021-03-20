@@ -20,7 +20,11 @@ namespace BERT.Console
             var prediction = model.Predict(args[0],
                 args[1]);
 
-            JsonSerializer.Serialize(prediction);
+            System.Console.WriteLine(JsonSerializer.Serialize(new
+            {
+                Probability = prediction.probability,
+                Tokens = prediction.tokens
+            }));
         }
     }
 }
