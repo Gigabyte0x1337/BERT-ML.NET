@@ -7,3 +7,5 @@
 /.vs
 *.onnx
 
+/BERT.Console/bin
+/BERT.Console/obj
