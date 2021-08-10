@@ -1,5 +1,5 @@
 # BERT-ML.NET
-Question and Answering (Q&A) BERT model implimentation for ML.NET.
+Question and Answering (Q&A) BERT model implementation for ML.NET.
 
 An example of BERT model predictions in .NET Core/.NET Standard.
 
