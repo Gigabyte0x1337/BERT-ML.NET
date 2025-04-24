@@ -4,7 +4,7 @@ Question and Answering (Q&A) BERT model implementation for ML.NET.
 An example of BERT model predictions in .NET Core/.NET Standard.
 
 ## Model
-[https://github.com/onnx/models/tree/master/text/machine_comprehension/bert-squad](https://github.com/onnx/models/tree/main/validated/text/machine_comprehension/bert-squad/model)
+[https://github.com/onnx/models/tree/master/validated/text/machine_comprehension/bert-squad](https://github.com/onnx/models/tree/main/validated/text/machine_comprehension/bert-squad/model)
 
 Download the pre-trained BERT ONNX model by running `getDependicies.sh`. Or download the [model](https://github.com/onnx/models/tree/main/validated/text/machine_comprehension/bert-squad/model/bertsquad-10.onnx?raw=true) to the `BERT.WebApi/Model` folder.
 
